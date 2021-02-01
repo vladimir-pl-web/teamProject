@@ -1,0 +1,137 @@
+.SelectBox {
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+}
+.SelectLabel {
+  font-size: 24px;
+  color: white;
+  padding: 20px 0;
+}
+.SelectBox select {
+  background-color: #0563af;
+  color: white;
+  padding: 14px;
+  width: 250px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+
+}
+
+/* .SelectBox::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.SelectBox:hover::after {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+} */
+
+.SelectBox select option {
+  padding: 30px;
+}
+
+.S {
+  width: 100%;
+  padding-top: 10px;
+  margin-top: 20px;
+  position: absolute;
+  left: 0;
+  z-index: 222;
+}
+.SelectElement {
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 6px;
+  color: yellow;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  background: linear-gradient(270deg, #22dbab, #2247db);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  -o-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+}
+.SelectElement.chosen {
+  background-image: radial-gradient(
+    circle,
+    #17498b,
+    #295291,
+    #375a97,
+    #43639c,
+    #4f6ca2,
+    #526fa9,
+    #5671af,
+    #5a74b6,
+    #5b70be,
+    #5e6cc5,
+    #6566cb,
+    #6e60cf
+  );
+}
+.ownSelect {
+  position: relative;
+  composes: SelectElement;
+  width: 100%;
+  text-align: center;
+}
+
+
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.MyActive {
+  animation: anim 500ms ease-out forwards;
+}
+
+.MyDone {
+  opacity: 1;
+}
+.MyExitActive {
+  animation: anim 500ms ease-out alternate-reverse;
+}
+.MyExitDone {
+  opacity: 0;
+  display: none;}
+
+@keyframes anim {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

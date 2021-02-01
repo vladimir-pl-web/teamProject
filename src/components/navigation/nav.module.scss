@@ -1,0 +1,21 @@
+.Nav{
+  display: flex;
+  height: 70px;
+  background-color: midnightblue;
+  padding: 10px 20px;
+  justify-content: space-between;
+  align-items: center;
+  .RouteLink{
+    width: 130px;
+    height: 40px;
+    cursor:pointer;
+    border-radius: 6px;
+    background-color: olive;
+    color:red;
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+
+  }
+}

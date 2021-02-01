@@ -1,0 +1,11 @@
+.inputWrapper{
+  width: 600px;
+}
+.Span{
+  margin: 0;
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 48px;
+  padding: 0 5px;
+}
