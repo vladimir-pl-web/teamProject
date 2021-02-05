@@ -36,7 +36,7 @@ const SuperRadio: React.FC<SuperRadioPropsType> = ({type, name,options, value, o
       : [];
 
     return (
-        <div style={{display: 'flex', width: '400px', justifyContent:'space-between'}}>
+        <div style={{display: 'flex', width: '390px', justifyContent:'space-between'}}>
             {mappedOptions}
         </div>
     );
