@@ -2,5 +2,26 @@
   background-color: peru;
   text-align: center;
   padding-top: 50px;
-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  .registerForm{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    width: 700px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    .Btns{
+      width: 650px;
+      display: flex;
+      justify-content: space-between;
+      button{
+        margin: 0;
+      }
+    }
+  }
 }
