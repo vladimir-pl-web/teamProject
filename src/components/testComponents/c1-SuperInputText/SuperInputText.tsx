@@ -11,6 +11,7 @@ type InputPropsType = DefaultInputPropsType & { // и + ещё пропсы ко
     onEnter?: () => void
     error?: string
     spanClassName?: string
+    touched?: boolean
 };
 
 const Input: React.FC<InputPropsType> = (
@@ -20,7 +21,7 @@ const Input: React.FC<InputPropsType> = (
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-
+        touched,
         ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
@@ -37,7 +38,7 @@ const Input: React.FC<InputPropsType> = (
         && onEnter(); // то вызвать его
     }
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ""}`;
-    const finalInputClassName = error ? s.errorInput : '' // need to fix with (?:) and s.superInput
+    const finalInputClassName = error && touched ? s.errorInput : '' // need to fix with (?:) and s.superInput
 
     return (
         <>
@@ -48,7 +49,7 @@ const Input: React.FC<InputPropsType> = (
                 className={`${s.superInput} ${finalInputClassName}`}
                 {...restProps} 
             />
-            {error && <span className={finalSpanClassName}>{error}</span>}
+            {error && touched && <span className={finalSpanClassName}>{error}</span>}
         </>
     );
 }
