@@ -20,7 +20,7 @@ function App() {
         <Route exact path={"/login"} render={() => <Login />} />
         <Route exact path={"/profile"} render={() => <Profile />} />
         <Route exact path={"/test"} render={() => <TestComponents />} />
-        <Route exact path={"/NewPass"} render={() => <NewPass />} />
+        <Route path={"/NewPass/:token"} render={() => <NewPass />} />
         <Route exact path={"/passRecover"} render={() => <PassRecover />} />
         <Route path={"*"} render={() => <Error />} />
         <Redirect from={"*"} to={"/404"} />
