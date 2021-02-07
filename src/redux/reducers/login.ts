@@ -1,11 +1,14 @@
 type LoginStateType = typeof initState
 const initState = {
-  login: '',
-  password: ''
+    email: '',
+    password: '',
+    rememberMe: false,
 }
 
 export const loginReducer = (state: LoginStateType = initState, action: any): LoginStateType => {
-  switch (action.type) {
-    default: return state
-  }
+    switch (action.type) {
+        default:
+            return state
+    }
 }
+
