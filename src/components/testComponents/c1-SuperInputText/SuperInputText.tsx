@@ -6,21 +6,22 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 
 // здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута
 // (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
-type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
+type InputPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
     error?: string
     spanClassName?: string
+    touched?: boolean
 };
 
-const SuperInputText: React.FC<SuperInputTextPropsType> = (
+const Input: React.FC<InputPropsType> = (
     {
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeText,
         onKeyPress, onEnter,
         error,
         className, spanClassName,
-
+        touched,
         ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
@@ -32,28 +33,25 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
     }
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>) => {
         onKeyPress && onKeyPress(e);
-
         e.key === "Enter" // если нажата кнопка Enter
         && onEnter // и есть пропс onEnter
         && onEnter(); // то вызвать его
     }
-
     const finalSpanClassName = `${s.error} ${spanClassName ? spanClassName : ""}`;
-    const finalInputClassName = error ? s.errorInput : '' // need to fix with (?:) and s.superInput
+    const finalInputClassName = error && touched ? s.errorInput : '' // need to fix with (?:) and s.superInput
 
     return (
         <>
             <input
-                type={"text"}
+                type={type}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={`${s.superInput} ${finalInputClassName}`}
-
-                {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
+                {...restProps} 
             />
-            {error && <span className={finalSpanClassName}>{error}</span>}
+            {error && touched && <span className={finalSpanClassName}>{error}</span>}
         </>
     );
 }
 
-export default SuperInputText;
+export default Input;
