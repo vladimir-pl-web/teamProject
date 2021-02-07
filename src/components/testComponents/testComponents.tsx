@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SuperInputText from "./c1-SuperInputText/SuperInputText";
+import Input from "./c1-SuperInputText/SuperInputText";
 import SuperButton from "./c2-SuperButton/SuperButton";
 import SuperCheckbox from "./c3-SuperCheckbox/SuperCheckbox";
 import SuperEditableSpan from "./c4-SuperEditableSpan/SuperEditableSpan";
@@ -44,8 +44,8 @@ const TestComponents = () => {
       };
   return (
     <div className={classes.TestComponents}>
-      <SuperInputText />
-      <SuperButton red>Press</SuperButton>
+      <Input />
+      <SuperButton>Press</SuperButton>
       <SuperCheckbox>Check it</SuperCheckbox>
       <SuperEditableSpan
         value={value}

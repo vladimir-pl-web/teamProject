@@ -1,11 +1,11 @@
 import classes from "./myInput.module.css";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent} from "react";
 
 
 
 type InputPropsType = {
   simonSaid: string;
-    onTextEnter: (value: string) => void
+  onTextEnter: (value: string) => void
   onAddTask: ()=>void
 };
 function AlternativeSuperInputText({ simonSaid, onTextEnter, onAddTask}: InputPropsType) {
