@@ -89,7 +89,7 @@ const PassRecover: React.FC = React.memo(() => {
                 {formik.touched.email && formik.errors.email ? (
                     <div style={{color: 'red'}}>{formik.errors.email}</div>
                 ) : null}
-                <SuperButton red type="submit">Send Email</SuperButton>
+                <SuperButton type="submit">Send Email</SuperButton>
                 {isError ? <div style={{color: 'red'}}>{isError}</div> : <></>}
             </form>
         </div>
