@@ -66,7 +66,7 @@ const PassRecover: React.FC = React.memo(() => {
     if (isMessageSend) {
         return (
             <div className={classes.PassRecover}>
-                <span>Email sent, check your email</span>
+                <span>Email sent, check your email </span>
                 <br/>
                 <span>You can try again after: {timeForNextTry}</span>
             </div>

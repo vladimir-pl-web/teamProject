@@ -1,6 +1,6 @@
 import {ThunkAction} from 'redux-thunk'
 import {RootStateType} from '../store';
-import {passwordAPI} from '../../components/api/passwordAPI';
+import {passwordAPI} from '../../api/api';
 
 const initState = {
     isMessageSend: false as boolean,
