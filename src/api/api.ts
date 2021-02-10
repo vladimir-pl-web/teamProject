@@ -37,15 +37,6 @@ const herokuInstance = axios.create({
   withCredentials: true
 })
 
-const messageForRecoveryPassword =
-    `<div>
-       To recover your password, follow the link:
-        <br/> 
-          <a href='http://localhost:3000/teamProject#/NewPass/$token$'>
-            http://localhost:3000/teamProject#/NewPass/$token$
-           </a>
-     </div>`
-
 export type userRegType = {
     email: string
     password: string
