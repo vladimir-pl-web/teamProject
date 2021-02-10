@@ -12,26 +12,26 @@ const initState = {
 export const passwordReducer = (state: PasswordStateType = initState, action: PasswordActionsType): PasswordStateType => {
     switch (action.type) {
         case 'PASSWORD/SET-MESSAGE-SEND':
-            return {...state,isMessageSend: action.isMessageSend}
-        case 'PASSWORD/SET-NEW-PASSWORD':
-            return {...state,isNewPasswordSet: true}
         case 'PASSWORD/SET-IS-FETCHING':
-            return {...state,isFetching: action.isFetching}
         case 'PASSWORD/SET-IS-ERROR':
-            return {...state,isError: action.isError}
+            return {...state, ...action.payload}
+        case 'PASSWORD/SET-NEW-PASSWORD':
+            return {...state, isNewPasswordSet: true}
         default:
             return state
     }
 }
 
-//ActionCreators
+//Actions
 export const setMessageSendAC = (isMessageSend: boolean) =>
-    ({type: 'PASSWORD/SET-MESSAGE-SEND', isMessageSend} as const)
+    ({type: 'PASSWORD/SET-MESSAGE-SEND', payload: {isMessageSend}} as const)
 const setNewPasswordAC = () => ({type: 'PASSWORD/SET-NEW-PASSWORD'} as const)
-const setIsFetchingAC = (isFetching: boolean) => ({type: 'PASSWORD/SET-IS-FETCHING', isFetching} as const)
-export const setErrorAC = (isError: string | null) => ({type: 'PASSWORD/SET-IS-ERROR', isError} as const)
+const setIsFetchingAC = (isFetching: boolean) =>
+    ({type: 'PASSWORD/SET-IS-FETCHING', payload: {isFetching}} as const)
+export const setErrorAC = (isError: string | null) =>
+    ({type: 'PASSWORD/SET-IS-ERROR', payload: {isError}} as const)
 
-//ThunkCreators
+//Thunks
 export const sendMessageToUser = (email: string): ThunkType => async (dispatch) => {
     dispatch(setIsFetchingAC(true))
     try {
@@ -76,6 +76,3 @@ type PasswordActionsType =
     ReturnType<typeof setIsFetchingAC> |
     ReturnType<typeof setErrorAC>
 type ThunkType = ThunkAction<void, RootStateType, unknown, PasswordActionsType>
-
-
-

@@ -5,10 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {sendMessageToUser, setErrorAC, setMessageSendAC} from '../../redux/reducers/password';
 import {RootStateType} from '../../redux/store';
 import Preloader from '../preloader/spinner';
-
-type FormikErrorType = {
-    email?: string
-}
+import SuperInputText from '../testComponents/c1-SuperInputText/SuperInputText';
+import SuperButton from '../testComponents/c2-SuperButton/SuperButton';
 
 const PassRecover: React.FC = React.memo(() => {
     const dispatch = useDispatch();
@@ -17,6 +15,7 @@ const PassRecover: React.FC = React.memo(() => {
     const isFetching = useSelector<RootStateType, boolean>(state => state.password.isFetching)
     const [timeForNextTry, setTimeForNextTry] = useState<number>(60)
 
+    //for timer after send message, for try again
     useEffect(() => {
         if (isMessageSend) {
             const id = setTimeout(() => {
@@ -53,15 +52,17 @@ const PassRecover: React.FC = React.memo(() => {
         },
     });
 
+    //cancel error, if server send good request after bad
     const cancelError = () => {
         if (isError) {
             dispatch(setErrorAC(null))
         }
     }
-
+    //preloader
     if (isFetching) {
         return <div className={classes.PassRecover}><Preloader/></div>
     }
+    //next try send message
     if (isMessageSend) {
         return (
             <div className={classes.PassRecover}>
@@ -77,7 +78,7 @@ const PassRecover: React.FC = React.memo(() => {
             <form onSubmit={formik.handleSubmit}>
                 RECOVER
                 <div>
-                    <input
+                    <SuperInputText
                         id="email"
                         type="email"
                         placeholder={'Email'}
@@ -88,10 +89,15 @@ const PassRecover: React.FC = React.memo(() => {
                 {formik.touched.email && formik.errors.email ? (
                     <div style={{color: 'red'}}>{formik.errors.email}</div>
                 ) : null}
-                <button type="submit">Send Email</button>
+                <SuperButton red type="submit">Send Email</SuperButton>
                 {isError ? <div style={{color: 'red'}}>{isError}</div> : <></>}
             </form>
         </div>
     )
 })
 export default PassRecover
+
+//Types
+type FormikErrorType = {
+    email?: string
+}
