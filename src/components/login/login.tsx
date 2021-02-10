@@ -1,9 +1,11 @@
 import React from "react";
 import classes from "./login.module.scss";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {useFormik} from "formik";
 import {setUserDateTC} from "../../redux/reducers/profile";
+import {RootStateType} from "../../redux/store";
+import {Redirect} from "react-router-dom";
 
 type FormikErrorsType = {
     email?: string
@@ -15,6 +17,11 @@ const Login = () => {
 
     const dispatch = useDispatch();
 
+    //here get error response from redux
+    const errorLogin = useSelector<RootStateType, string>(state => state.profile.error)
+    const isAuthSuccess = useSelector<RootStateType, boolean>(state => state.profile.isAuthSuccess)
+
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -22,15 +29,7 @@ const Login = () => {
             rememberMe: false,
         },
         onSubmit: (values) => {
-            //it work version, for test profile reducer
-            alert(JSON.stringify(values));
-
-            const payload = {
-                email: "nya-admin@nya.nya",
-                password: "1qazxcvBG",
-                rememberMe: false
-            }
-            dispatch(setUserDateTC(payload))
+            dispatch(setUserDateTC(values))
         },
         validate: (values) => {
             const errors: FormikErrorsType = {};
@@ -48,6 +47,9 @@ const Login = () => {
         }
     })
 
+    if (isAuthSuccess) {
+        return <Redirect to="/profile"/>
+    }
 
     return <div className={classes.Login}>
         <form onSubmit={formik.handleSubmit}>
@@ -83,6 +85,7 @@ const Login = () => {
                 :
                 null
             }
+            {errorLogin && <div style={{color: "red"}}>{errorLogin}</div>}
             <div>
                 <input
                     type="checkbox"
