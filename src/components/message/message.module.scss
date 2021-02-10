@@ -1,0 +1,17 @@
+.Message{
+  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: rgb(212, 218, 224);
+ 
+}
+.Message.error{
+  color: red;
+   padding: 20px;
+}
+.Message.success{
+  color:green;
+   padding: 20px;
+   font-size: 16px;
+}
