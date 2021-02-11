@@ -6,13 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setNewPassword} from '../../redux/reducers/password';
 import {RootStateType} from '../../redux/store';
 import Preloader from '../preloader/spinner';
-
-type FormikErrorType = {
-    password?: string
-}
-type ParamTypes = {
-    token: string
-}
+import SuperInputText from '../testComponents/c1-SuperInputText/SuperInputText';
+import SuperButton from '../testComponents/c2-SuperButton/SuperButton';
 
 const NewPass: React.FC = () => {
     const dispatch = useDispatch()
@@ -38,16 +33,18 @@ const NewPass: React.FC = () => {
         },
     });
 
+    // if success password changed
     if (isNewPasswordSet) {
         return <Redirect to={'/login'}/>
     }
+    //Preloader
     if (isFetching) {
-      return <div className={classes.NewPass}><Preloader/></div>
+        return <div className={classes.NewPass}><Preloader/></div>
     }
     return <div className={classes.NewPass}>
         <form onSubmit={formik.handleSubmit}>
             <div>
-                <input
+                <SuperInputText
                     id="password"
                     type="password"
                     placeholder={'New Password'}
@@ -57,9 +54,17 @@ const NewPass: React.FC = () => {
             {formik.touched.password && formik.errors.password ? (
                 <div style={{color: 'red'}}>{formik.errors.password}</div>
             ) : null}
-            <button type="submit">Set New Password</button>
-            {isError? <div style={{color: 'red'}}>{isError}</div> : <></>}
+            <SuperButton type="submit">Set New Password</SuperButton>
+            {isError ? <div style={{color: 'red'}}>{isError}</div> : <></>}
         </form>
     </div>;
 };
 export default NewPass;
+
+//Types
+type FormikErrorType = {
+    password?: string
+}
+type ParamTypes = {
+    token: string
+}

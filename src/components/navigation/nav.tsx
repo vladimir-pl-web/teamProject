@@ -9,7 +9,6 @@ const Nav = () => {
     { to: "/login", name: "login" },
     { to: "/passRecover", name: "recover password" },
     { to: "/test", name: "test" },
-    { to: "/NewPass", name: "NewPass" },
   ].map(({ to, name }) => {
     return (
       <li key={name}>

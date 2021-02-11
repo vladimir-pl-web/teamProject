@@ -1,6 +1,6 @@
 import {ThunkAction} from 'redux-thunk'
 import {RootStateType} from '../store';
-import {passwordAPI} from '../../components/api/passwordAPI';
+import {API} from "../../api/api";
 
 const initState = {
     isMessageSend: false as boolean,
@@ -35,7 +35,7 @@ export const setErrorAC = (isError: string | null) => ({type: 'PASSWORD/SET-IS-E
 export const sendMessageToUser = (email: string): ThunkType => async (dispatch) => {
     dispatch(setIsFetchingAC(true))
     try {
-        await passwordAPI.forgot(email)
+        await API.forgotPassword(email)
         dispatch(setMessageSendAC(true))
         dispatch(setErrorAC(null))
     } catch (err) {
@@ -53,7 +53,7 @@ export const sendMessageToUser = (email: string): ThunkType => async (dispatch) 
 export const setNewPassword = (password: string, token: string): ThunkType => async (dispatch) => {
     dispatch(setIsFetchingAC(true))
     try {
-        await passwordAPI.setNewPassword(password, token)
+        await API.setNewPassword(password, token)
         dispatch(setNewPasswordAC())
         dispatch(setErrorAC(null))
     } catch (err) {
