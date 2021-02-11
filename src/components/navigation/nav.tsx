@@ -4,8 +4,8 @@ import classes from './nav.module.scss'
 
 const Nav = () => {
   const routeList = [
-    { to: "/", name: "register" },
-    { to: "/profile", name: "home" },
+    { to: "/", name: "profile" },
+    { to: "/register", name: "register" },
     { to: "/login", name: "login" },
     { to: "/passRecover", name: "recover password" },
     { to: "/test", name: "test" },

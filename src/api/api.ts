@@ -64,8 +64,13 @@ export const API = {
   },
   logout() {
     return instance.delete(`auth/me/`,{}).then(response=>response.data)
+  },
+  isAuth() {
+    return instance.post(`auth/me/`, {}).then(response=>response.data)
+  },
+  updateUser(name: string, avatar: string) {
+    return instance.put(`auth/me/`, {name, avatar}).then((response)=>response.data)
   }
-
 }
 
 // export const passwordAPI = {

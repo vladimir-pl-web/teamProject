@@ -31,10 +31,10 @@ const Login = () => {
     const history = useHistory();
 
     const redirectToProfile = () => {
-        history.push(`/profile`);
+        history.push(`/`);
     };
     const redirectToRegistration = () => {
-        history.push(`/`);
+        history.push(`/register`);
     };
 
     isAuthSuccess && (() => {

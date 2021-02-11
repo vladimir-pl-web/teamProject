@@ -16,9 +16,9 @@ function App() {
     <div className="App">
       <Nav />
       <Switch>
-        <Route exact path={"/"} render={() => <Register />} />
+        <Route exact path={"/"} render={() => <Profile />} />
         <Route exact path={"/login"} render={() => <Login />} />
-        <Route exact path={"/profile"} render={() => <Profile />} />
+        <Route exact path={"/register"} render={() => <Register />} />
         <Route exact path={"/test"} render={() => <TestComponents />} />
         <Route path={"/NewPass/:token"} render={() => <NewPass />} />
         <Route exact path={"/passRecover"} render={() => <PassRecover />} />

@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./profile.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../redux/store";
-import {deleteUserTC, User} from "../../redux/reducers/profile";
+import {deleteUserTC, isUserAuth, User} from "../../redux/reducers/profile";
 import SuperButton from "../testComponents/c2-SuperButton/SuperButton";
 import { useHistory } from "react-router-dom";
 import Preloader from "../preloader/spinner";
 
 const Profile = () => {
 
-  let isLoaded = useSelector<RootStateType, boolean>((state)=>state.profile.loading)
+let isLoaded = useSelector<RootStateType, boolean>((state)=>state.profile.loading)
 const dispatch = useDispatch()
-const history = useHistory()
+  const history = useHistory()
+  const isAuthorised = useSelector<RootStateType, boolean>((state)=>state.profile.isAuthSuccess)
   
+  useEffect(() => {
+    dispatch(isUserAuth());
+    !isAuthorised && history.push("/login");
+  },[])
   const logoutHandler = () => {
     dispatch(deleteUserTC());
     history.push('/login')
