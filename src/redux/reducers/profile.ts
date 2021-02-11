@@ -4,7 +4,8 @@ import {API} from "../../api/api";
 //types constants
 enum ACTION_TYPES {
     SET_USER_DATA = "SET_USER_DATA",
-    SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+    SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE',
+    SET_USER_LOADING = 'SET_USER_LOADING'
 }
 
 //Common types
@@ -18,6 +19,7 @@ type ProfileStateType = {
     user: User,
     isAuthSuccess: boolean,
     error: string,
+    loading: boolean
 }
 
 export type User = {
@@ -27,12 +29,14 @@ export type User = {
     publicCardPacksCount: number | null,
     verified: boolean,
     rememberMe: boolean,
+    message: string
 }
 
 //Action Creators Type
 type SetUserDataActionType = {
     type: ACTION_TYPES.SET_USER_DATA,
     user: User,
+    isAuth:boolean
 }
 
 type SetErrorMessage = {
@@ -40,7 +44,11 @@ type SetErrorMessage = {
     error: string
 }
 
-type AllActionsTypes = SetUserDataActionType | SetErrorMessage
+type SetUserLoading = {
+    type: ACTION_TYPES.SET_USER_LOADING
+    loading: boolean
+}
+type AllActionsTypes = SetUserDataActionType | SetErrorMessage | SetUserLoading
 
 //Reducer
 const initState = {
@@ -51,9 +59,11 @@ const initState = {
         publicCardPacksCount: null,
         verified: false,
         rememberMe: false,
+        message: ''
     },
     isAuthSuccess: false,
     error: '',
+    loading: false
 }
 
 export const profileReducer = (state: ProfileStateType = initState, action: AllActionsTypes): ProfileStateType => {
@@ -62,7 +72,8 @@ export const profileReducer = (state: ProfileStateType = initState, action: AllA
             return {
                 ...state,
                 user: action.user,
-                isAuthSuccess: true,
+                isAuthSuccess: action.isAuth,
+                error: ''
             }
         case ACTION_TYPES.SET_ERROR_MESSAGE:
             return  {
@@ -70,19 +81,29 @@ export const profileReducer = (state: ProfileStateType = initState, action: AllA
                 isAuthSuccess: false,
                 error: action.error,
             }
+        case ACTION_TYPES.SET_USER_LOADING:
+            return {
+                ...state, loading:action.loading
+            }
         default:
             return state
     }
 }
 
 //ActionCreators
-const setUserDataAC = (user: User) => {
+const setUserDataAC = (user: User, isAuth:boolean) => {
     return {
         type: ACTION_TYPES.SET_USER_DATA,
         user,
+        isAuth
     }
 }
-
+const setUserLoadingAC = (loading: boolean) => {
+    return {
+        type: ACTION_TYPES.SET_USER_LOADING,
+        loading
+    }
+}
 const setErrorMessageAC = (error: string) => {
     return {
         type: ACTION_TYPES.SET_ERROR_MESSAGE,
@@ -92,9 +113,9 @@ const setErrorMessageAC = (error: string) => {
 
 //ThunkCreators
 export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispatch) => {
+    dispatch(setUserLoadingAC(true))
     try {
-        const res = await API.login(payload);
-        debugger
+        const res = await API.login(payload)
         const {
             avatar,
             email,
@@ -102,7 +123,7 @@ export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispat
             publicCardPacksCount,
             rememberMe,
             verified,
-        } = res.data
+        } = res
 
         const user = {
             avatar,
@@ -111,14 +132,33 @@ export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispat
             publicCardPacksCount,
             rememberMe,
             verified,
+            message: `${email} successfully logged`
         }
-        dispatch(setUserDataAC(user))
+        dispatch(setUserDataAC(user, true))
 
     } catch (e) {
         const error = e.response ? e.response.data.error : `${e.message} more details in the console`
-        debugger
         console.log('Error: ', {...e})
         dispatch(setErrorMessageAC(error))
     }
+    dispatch(setUserLoadingAC(false))
 }
 
+export const deleteUserTC = () => async (dispatch: Dispatch) => {
+    dispatch(setUserLoadingAC(true))
+    try {
+         API.logout()
+        dispatch(setUserDataAC({
+        email: '',
+        name: '',
+        avatar: '',
+        publicCardPacksCount: null,
+        verified: false,
+        rememberMe: false,
+        message: ''}, false))
+    }
+    catch (e) {
+        dispatch(setErrorMessageAC('Something gonna wrong'))
+    }
+    dispatch(setUserLoadingAC(false))
+}

@@ -85,16 +85,16 @@ const Register = () => {
               error={formik.errors.email}
               touched={formik.touched.email}
               {...formik.getFieldProps("email")}
-                onBlur={formik.handleBlur}
-                onFocus={onFocus}
+              onBlur={formik.handleBlur}
+              onFocus={onFocus}
             />
             <Input
               type="password"
               error={formik.errors.password}
               {...formik.getFieldProps("password")}
               touched={formik.touched.password}
-                onBlur={formik.handleBlur}
-                onFocus={onFocus}
+              onBlur={formik.handleBlur}
+              onFocus={onFocus}
             />
           </>
         )}

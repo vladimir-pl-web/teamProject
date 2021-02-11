@@ -3,4 +3,18 @@
   text-align: center;
  padding-top: 50px;
 height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+.Loginform{
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  .BtnWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
 }
