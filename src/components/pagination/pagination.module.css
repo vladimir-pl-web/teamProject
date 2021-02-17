@@ -1,0 +1,11 @@
+.bar ul {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.pagePortion {
+    display: block;
+    margin: 0 auto;
+}
