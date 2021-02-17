@@ -54,7 +54,7 @@ const NewPass: React.FC = () => {
             {formik.touched.password && formik.errors.password ? (
                 <div style={{color: 'red'}}>{formik.errors.password}</div>
             ) : null}
-            <SuperButton type="submit">Set New Password</SuperButton>
+            <SuperButton type="submit" color='blue'>Set New Password</SuperButton>
             {isError ? <div style={{color: 'red'}}>{isError}</div> : <></>}
         </form>
     </div>;
