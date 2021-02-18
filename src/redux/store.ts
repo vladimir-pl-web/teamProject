@@ -4,10 +4,12 @@ import thunk from 'redux-thunk';
 import { profileReducer } from "./reducers/profile";
 import { registerReducer } from "./reducers/register";
 import {passwordReducer} from './reducers/password';
+import { cardsReducer } from "./reducers/cards";
 const reducers = combineReducers({
   register: registerReducer,
   profile: profileReducer,
-  password: passwordReducer
+  password: passwordReducer,
+  cards: cardsReducer
 });
 
 

@@ -22,9 +22,6 @@ const Register = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const registerStatuses = useSelector<RootStateType, RegisterStateType>((state) => state.register);
-
-
-
   let type = ''
   if(registerStatuses.user){type = 'success'}
   if (registerStatuses.error) { type = 'error' }

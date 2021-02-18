@@ -135,16 +135,6 @@ export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispat
             message: `${email} successfully logged`
         }
         dispatch(setUserDataAC(user, true))
-        if (!avatar || !name){
-            try {
-            const newData = await API.updateUser('User', 'some url')
-             console.log(newData);
-                
-            }
-            catch (e) {
-                
-            }
-        }
 
     } catch (e) {
         const error = e.response ? e.response.data.error : `${e.message} more details in the console`
@@ -178,7 +168,6 @@ export const isUserAuth = () => async (dispatch: Dispatch) => {
     try {
         const data = await API.isAuth()
         const {avatar,email,name,publicCardPacksCount,rememberMe,verified} = data
-
         const user = {
             avatar,
             email,
@@ -188,8 +177,7 @@ export const isUserAuth = () => async (dispatch: Dispatch) => {
             verified,
             message: `${email} successfully logged`
         }
-        dispatch(setUserDataAC(user, true))
-        
+        dispatch(setUserDataAC(user, true))        
     }
     catch (e) {
         const error = {...e };

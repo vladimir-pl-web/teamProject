@@ -70,19 +70,37 @@ export const API = {
   },
   updateUser(name: string, avatar: string) {
     return instance.put(`auth/me/`, {name, avatar}).then((response)=>response.data)
+  },
+  getCards() {
+    return instance.get<CardsResponseType>(`cards/pack/`).then((response)=> response.data)
   }
 }
 
-// export const passwordAPI = {
-//   forgot(email: string) {
-//     return herokuInstance.post('auth/forgot', {
-//       email,
-//       from: 'Mars<pharm.sale777@gmail.com>',
-//       message: messageForRecoveryPassword
-//     })
-//   },
-//   setNewPassword(password: string, resetPasswordToken: string) {
-//     return herokuInstance.post<{ info: string }>('auth/set-new-password', {password, resetPasswordToken})
-//   }
-// }
+export type CardsResponseType = {
+  cardPacks: Array<CardsType>
+  cardsPackTotalCount: number
+  maxCardCount: number
+  minCardCount: number
+  page: number
+  pageCount: number
+  token: string
+  tokenDeathTime: number
+}
 
+export type CardsType = {
+  cardsCount: number
+  created: string
+  grade: number
+  more_id: string
+  name: string
+  path: string
+  private: boolean
+  rating: number
+  shots: number
+  type: string
+  updated: string
+  user_id: string
+  user_name: string
+  __v: number
+  _id:string
+}

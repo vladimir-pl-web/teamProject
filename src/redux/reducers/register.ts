@@ -1,5 +1,5 @@
 import { RegisterType } from "../actions/register";
-import { GET_REGISTRATION_ERROR, REGISTER_NEW_USER, SET_LOADING } from "../types";
+import { GET_REGISTRATION_ERROR, REGISTER_NEW_USER, SET_REG_LOADING } from "../types";
 
 export type RegisterStateType = typeof initState;
 const initState = {
@@ -14,7 +14,7 @@ export const registerReducer = (state: RegisterStateType = initState,action: Reg
       return { ...state, loading: false, error: '', user: action.user }
     case GET_REGISTRATION_ERROR:
       return { ...state, loading: false, error: action.error, user: '' }
-    case SET_LOADING:
+    case SET_REG_LOADING:
       return{...state, loading:true}
     default:
       return state;
