@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { API, CardsType } from "../../api/api";
+import { AddDataType, API, CardsType } from "../../api/api";
 
 type InitCardsType = typeof initState
 const initState = {
@@ -34,9 +34,9 @@ export const cardsReducer = (state: InitCardsType = initState, action: CardsActi
   }
 }
 
-export const getAllCards = () => (dispatch:Dispatch)=>{
+export const getAllCards = (data?:AddDataType) => (dispatch:Dispatch)=>{
   dispatch(setLoading(true))
-  API.getCards()
+  API.getCards(data)
     .then((res) => {
       dispatch(setCards(res.cardPacks))
        dispatch(setLoading(false))

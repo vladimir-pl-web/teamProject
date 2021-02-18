@@ -7,8 +7,8 @@ import { RootStateType } from '../../redux/store'
 import DeleteIcon from "@material-ui/icons/Delete";
 import Preloader from '../preloader/spinner'
 import classes from './cards.module.scss'
-import { isUserAuth } from '../../redux/reducers/profile'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { Pagin } from '../pagination/Pagin'
 
 const Cards = () => {
   
@@ -42,12 +42,13 @@ const CustomTableCell = withStyles((theme) => ({
   const isLoading = useSelector<RootStateType, boolean>((state) => state.cards.loading)
   const cards = useSelector<RootStateType, Array<CardsType>>((state) => state.cards.cards)
   const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+   const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
   const history = useHistory();
 
   const dispatch = useDispatch()
   useEffect(() => {
-!isAuthorised && history.push("/login");
-  dispatch(getAllCards())
+// !isAuthorised && history.push("/login");
+  dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
   }, [])
   
   const rows = cards.map((el) => {
@@ -94,6 +95,7 @@ const CustomTableCell = withStyles((theme) => ({
       {isLoading ? (
         <Preloader />
       ) : (
+          <>
         <Paper className={classes.root}>
           <Table className={classes.table}>
             <TableHead style={{ borderRadius: "3px" }}>
@@ -109,7 +111,10 @@ const CustomTableCell = withStyles((theme) => ({
             </TableHead>
             <TableBody>{rows}</TableBody>
           </Table>
-        </Paper>
+          </Paper>
+          
+            <Pagin />
+            </>
       )}
     </div>
   );

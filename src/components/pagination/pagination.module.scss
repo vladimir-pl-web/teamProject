@@ -1,0 +1,24 @@
+.bar ul {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.item{
+    margin: 2px;
+    display: flex;
+    background-color: brown;
+    justify-content: center;
+    align-items: center;
+    a{
+    display: block;
+    width: 40px;
+    height: 40px;
+    }
+}
+.pagePortion {
+    display: block;
+    margin: 0 auto;
+}
