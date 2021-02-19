@@ -83,6 +83,9 @@ export const API = {
   updatePack(id: string) {
     return instance.put(`cards/pack/`, {cardsPack:{ _id: id,name:'NewNameUpdated' } }).then((response) => response.data)
   },
+    getSinglecardPack(id: string) {
+    return instance.get<SingleCardResponseType>(`cards/card/?&cardsPack_id=${id}`).then((response) => response.data)
+  },
 }
 export type AddDataType = {
   packName?: string
@@ -118,6 +121,30 @@ export type CardsType = {
   updated: string
   user_id: string
   user_name: string
+  __v: number
+  _id: string
+}
+export type SingleCardResponseType = {
+  cards: Array<SingleCardType>
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
+}
+ 
+export type SingleCardType = {
+  answer: string
+  question: string
+  cardsPack_id: string
+  grade: number
+  rating: number
+  shots: number
+  type: string
+  user_id: string
+  created: string
+  updated: string
   __v: number
   _id: string
 }

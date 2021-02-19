@@ -6,12 +6,14 @@ import { registerReducer } from "./reducers/register";
 import {passwordReducer} from './reducers/password';
 import { cardsReducer } from "./reducers/cards";
 import { paginationReducer } from "./reducers/pagination";
+import { singleCardReducer } from "./reducers/singleCard";
 const reducers = combineReducers({
   register: registerReducer,
   profile: profileReducer,
   password: passwordReducer,
   cards: cardsReducer,
   pagination: paginationReducer,
+  singlePack: singleCardReducer,
 });
 
 

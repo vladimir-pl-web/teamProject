@@ -9,6 +9,7 @@ import Profile from './components/profile/profile';
 import Register from './components/register/register';
 import Error from './components/error/error'
 import Nav from './components/navigation/nav';
+import Packs from './components/packs/packs';
 import Cards from './components/cards/cards';
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
         <Route exact path={"/"} render={() => <Profile />} />
         <Route exact path={"/login"} render={() => <Login />} />
         <Route exact path={"/register"} render={() => <Register />} />
-        <Route exact path={"/cards"} render={() => <Cards />} />
+        <Route exact path={"/packs"} render={() => <Packs />} />
+        <Route exact path={"/cards/:id?/"} render={() => <Cards />} />
         <Route path={"/NewPass/:token"} render={() => <NewPass />} />
         <Route exact path={"/passRecover"} render={() => <PassRecover />} />
         <Route path={"*"} render={() => <Error />} />

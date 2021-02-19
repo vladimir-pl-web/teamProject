@@ -8,6 +8,7 @@ const Nav = () => {
     { to: "/register", name: "register" },
     { to: "/login", name: "login" },
     { to: "/passRecover", name: "recover password" },
+    { to: "/packs", name: "packs" },
     { to: "/cards", name: "cards" },
   ].map(({ to, name }) => {
     return (
@@ -17,7 +18,7 @@ const Nav = () => {
         </NavLink>
       </li>
     );
-  })
+  });
 
   return (
     <ul className = {classes.Nav}>
