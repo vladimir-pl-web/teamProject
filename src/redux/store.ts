@@ -5,8 +5,9 @@ import { profileReducer } from "./reducers/profile";
 import { registerReducer } from "./reducers/register";
 import {passwordReducer} from './reducers/password';
 import { cardsReducer } from "./reducers/cards";
-import { paginationReducer } from "./reducers/pagination";
 import { singleCardReducer } from "./reducers/singleCard";
+import {paginationReducer} from "./reducers/pagination";
+import { findReducer } from "./reducers/find";
 const reducers = combineReducers({
   register: registerReducer,
   profile: profileReducer,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   cards: cardsReducer,
   pagination: paginationReducer,
   singlePack: singleCardReducer,
+  find: findReducer,
 });
 
 

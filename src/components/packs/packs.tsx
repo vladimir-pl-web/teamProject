@@ -10,6 +10,7 @@ import classes from './packs.module.scss'
 import { useHistory} from 'react-router-dom'
 import { Pagin } from '../pagination/Pagin'
 import Icon from '@material-ui/core/Icon'
+import { Find } from '../find/Find'
 
 const Packs = () => {
 
@@ -134,6 +135,7 @@ const Packs = () => {
         <Preloader />
       ) : (
         <>
+          <Find />
           <Grid
             container
             xs={6}
@@ -141,10 +143,7 @@ const Packs = () => {
             justify="space-between"
             style={{ width: "100%", margin: "20px", flexBasis: "0" }}
           >
-            <Grid item xs={3} style={{ color: "yellow" }}>
-              Тут будет поиск
-            </Grid>
-            <Grid item xs={4} style={{color:'yellow'}}>
+            <Grid item xs={4} style={{ color: "yellow" }}>
               put your count range
               <Slider
                 color="primary"
