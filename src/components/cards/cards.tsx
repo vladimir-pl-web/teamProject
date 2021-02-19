@@ -2,7 +2,7 @@ import { Button, Grid, Paper, Slider, Switch, Table, TableBody, TableCell, Table
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CardsType } from '../../api/api'
-import { getAllCards } from '../../redux/reducers/cards'
+import { addCards, deleteCards, getAllCards, updateCards } from '../../redux/reducers/cards'
 import { RootStateType } from '../../redux/store'
 import DeleteIcon from "@material-ui/icons/Delete";
 import Preloader from '../preloader/spinner'
@@ -43,16 +43,17 @@ const Cards = () => {
   const min = useSelector<RootStateType, number>((state) => state.cards.min)
   const max = useSelector<RootStateType, number>((state) => state.cards.max);
   const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+  const myId= useSelector<RootStateType, string>((state) => state.profile.user._id)
   const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
+  console.log(myId);
 
   const history = useHistory();
   const [sort, setSort] = useState<boolean>(false)
   const [values, setValues] = useState<Array<number>>([min, max])
-  console.log(values);
 
   const dispatch = useDispatch()
   useEffect(() => {
-    // !isAuthorised && history.push("/login");
+    !isAuthorised && history.push("/login");
     dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
   }, [])
 
@@ -68,20 +69,32 @@ const Cards = () => {
 
     dispatch(getAllCards({min: values[0].toString(), max: values[1].toString() }));
   }
+  const deleteHandler = (id: string) => {
+    dispatch(deleteCards(id));
+  }
+  const onPackAdd = () => {
+    dispatch(addCards());
+    
+  }
+  const onUpdated = (id:string) => {
+    dispatch(updateCards(id));
+  }
   const rows = cards.map((el) => {
     return (
       <TableRow key={el._id}>
         <CustomTableCell component="th" scope="row">
-          {el.user_name}
+          {el.name}
         </CustomTableCell>
         <CustomTableCell align="right">{el.cardsCount}</CustomTableCell>
-        <CustomTableCell align="right">{el.updated}</CustomTableCell>
+        <CustomTableCell align="right">{el.user_id}</CustomTableCell>
         <CustomTableCell align="right">{el.path}</CustomTableCell>
         <CustomTableCell align="right">
           <Button
             variant="contained"
             color="secondary"
             className={classes.button}
+            disabled={myId !== el.user_id}
+            onClick={() => deleteHandler(el._id)}
           >
             Delete
             <DeleteIcon className={classes.rightIcon} />
@@ -89,9 +102,11 @@ const Cards = () => {
         </CustomTableCell>
         <CustomTableCell align="right">
           <Button
+            disabled={myId !== el.user_id}
             variant="contained"
             color="primary"
             className={classes.button}
+            onClick={()=>onUpdated(el._id)}
           >
             update
           </Button>
@@ -124,7 +139,8 @@ const Cards = () => {
             <Grid item xs={3} style={{ color: "yellow" }}>
               Тут будет поиск
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={4} style={{color:'yellow'}}>
+              put your count range
               <Slider
                 color="primary"
                 value={values}
@@ -142,8 +158,21 @@ const Cards = () => {
                 className={classes.button}
                 onClick={onCountSort}
               >
-                Sort by count
                 <Icon className={classes.rightIcon}>sort</Icon>
+                by count
+              </Button>
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                variant="contained"
+                color="default"
+                className={classes.button}
+                onClick={onPackAdd}
+              >
+                <Icon className={classes.rightIcon} color="primary">
+                  add
+                </Icon>
+                pack
               </Button>
             </Grid>
           </Grid>

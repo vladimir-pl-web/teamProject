@@ -29,7 +29,8 @@ export type User = {
     publicCardPacksCount: number | null,
     verified: boolean,
     rememberMe: boolean,
-    message: string
+    message: string,
+    _id: string
 }
 
 //Action Creators Type
@@ -59,7 +60,8 @@ const initState = {
         publicCardPacksCount: null,
         verified: false,
         rememberMe: false,
-        message: ''
+        message: '',
+        _id: ''
     },
     isAuthSuccess: false,
     error: '',
@@ -123,6 +125,7 @@ export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispat
             publicCardPacksCount,
             rememberMe,
             verified,
+            _id,_
         } = res
 
         const user = {
@@ -132,6 +135,7 @@ export const setUserDateTC = (payload: LoginDataType) => async (dispatch: Dispat
             publicCardPacksCount,
             rememberMe,
             verified,
+            _id,
             message: `${email} successfully logged`
         }
         dispatch(setUserDataAC(user, true))
@@ -155,6 +159,7 @@ export const deleteUserTC = () => async (dispatch: Dispatch) => {
         publicCardPacksCount: null,
         verified: false,
         rememberMe: false,
+        _id: '',
         message: ''}, false))
     }
     catch (e) {
@@ -167,7 +172,8 @@ export const isUserAuth = () => async (dispatch: Dispatch) => {
     dispatch(setUserLoadingAC(true))
     try {
         const data = await API.isAuth()
-        const {avatar,email,name,publicCardPacksCount,rememberMe,verified} = data
+        console.log(data);
+        const {avatar,email,name,publicCardPacksCount,rememberMe,verified, _id} = data
         const user = {
             avatar,
             email,
@@ -175,6 +181,7 @@ export const isUserAuth = () => async (dispatch: Dispatch) => {
             publicCardPacksCount,
             rememberMe,
             verified,
+            _id,
             message: `${email} successfully logged`
         }
         dispatch(setUserDataAC(user, true))        
