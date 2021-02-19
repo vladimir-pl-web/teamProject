@@ -10,6 +10,7 @@ import Register from './components/register/register';
 import TestComponents from './components/testComponents/testComponents';
 import Error from './components/error/error'
 import Nav from './components/navigation/nav';
+import {Find} from "./components/find/Find";
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
         <Route path={"*"} render={() => <Error />} />
         <Redirect from={"*"} to={"/404"} />
       </Switch>
+        <Find />
     </div>
+
   );
 }
 

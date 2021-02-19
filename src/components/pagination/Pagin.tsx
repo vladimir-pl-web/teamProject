@@ -19,7 +19,7 @@ export const Pagin = () => {
     useEffect(() => {
         if (isChanged) {
             //getCardColods()
-            setIsChanged(false);
+            setIsChanged(false); //getCardColods тоже в зависисимости потом
         }
     }, [isChanged, setIsChanged])
 
@@ -32,7 +32,6 @@ export const Pagin = () => {
         const itemsCountPerPage = +e.currentTarget.value;
         dispatch(setPaginationAC(itemsCountPerPage))
     }
-
 
     return <React.Fragment>
         <div className={styles.bar}>
