@@ -1,7 +1,7 @@
 import { Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams} from 'react-router-dom';
+import { useHistory, useParams} from 'react-router-dom';
 import { SingleCardType } from '../../api/api';
 import { getSinglePack } from '../../redux/reducers/singleCard';
 import { RootStateType } from '../../redux/store';
@@ -14,9 +14,10 @@ const Cards = () => {
   const dispatch = useDispatch()
   const cardPack = useSelector<RootStateType, Array<SingleCardType>>((state) => state.singlePack.card)
   const isLoading = useSelector<RootStateType, boolean>((state) => state.singlePack.loading)
-
- 
+const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+  const history = useHistory();
   useEffect(() => {
+    !isAuthorised && history.push("/login");
   id &&  dispatch(getSinglePack(id.slice(1)));
   }, [])
     const CustomTableCell = withStyles((theme) => ({

@@ -48,7 +48,7 @@ const Packs = () => {
   const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
 
   const history = useHistory();
-  console.log(history);
+
   
   const [sort, setSort] = useState<boolean>(false)
   const [values, setValues] = useState<Array<number>>([min, max])
