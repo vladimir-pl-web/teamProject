@@ -1,5 +1,5 @@
-import { Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core'
-import React, { useEffect } from 'react'
+import { Button, Paper, Switch, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CardsType } from '../../api/api'
 import { getAllCards } from '../../redux/reducers/cards'
@@ -22,6 +22,12 @@ const CustomTableCell = withStyles((theme) => ({
     background: "rgba(191, 191, 191, .7)",
   },
 }))(TableCell);
+  const CustomSwitch = withStyles((theme) => ({
+    root: {
+      transform: 'rotate(90deg)'
+    },
+ 
+  }))(Switch);
 
 // const styles = (theme: { spacing: { unit: number }; palette: { background: { default: any } } }) => ({
 //   root: {
@@ -44,13 +50,18 @@ const CustomTableCell = withStyles((theme) => ({
   const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
    const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
   const history = useHistory();
-
+const [sort, setSort]=useState<boolean>(false)
   const dispatch = useDispatch()
   useEffect(() => {
 // !isAuthorised && history.push("/login");
   dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
   }, [])
   
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSort(e.currentTarget.checked)
+    let res = sort === true ? '0' : '1'
+    dispatch(getAllCards({sortPacks: res }));
+  };
   const rows = cards.map((el) => {
     return (
       <TableRow key={el._id}>
@@ -95,26 +106,28 @@ const CustomTableCell = withStyles((theme) => ({
       {isLoading ? (
         <Preloader />
       ) : (
-          <>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead style={{ borderRadius: "3px" }}>
-              <TableRow>
-                <CustomTableCell>Name</CustomTableCell>
-                <CustomTableCell align="right">Card Count</CustomTableCell>
-                <CustomTableCell align="right">Updated</CustomTableCell>
-                <CustomTableCell align="right">Url</CustomTableCell>
-                <CustomTableCell align="right">Delete</CustomTableCell>
-                <CustomTableCell align="right">Update</CustomTableCell>
-                <CustomTableCell align="right">Get Cards</CustomTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>{rows}</TableBody>
-          </Table>
+        <>
+          <Paper className={classes.root}>
+            <Table className={classes.table}>
+              <TableHead style={{ borderRadius: "3px" }}>
+                <TableRow>
+                  <CustomTableCell>
+                    <CustomSwitch checked={sort} onChange={handleChange} /> Name
+                  </CustomTableCell>
+                  <CustomTableCell align="right">Card Count</CustomTableCell>
+                  <CustomTableCell align="right">Updated</CustomTableCell>
+                  <CustomTableCell align="right">Url</CustomTableCell>
+                  <CustomTableCell align="right">Delete</CustomTableCell>
+                  <CustomTableCell align="right">Update</CustomTableCell>
+                  <CustomTableCell align="right">Get Cards</CustomTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{rows}</TableBody>
+            </Table>
           </Paper>
-          
-            <Pagin />
-            </>
+
+          <Pagin />
+        </>
       )}
     </div>
   );

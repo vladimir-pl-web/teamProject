@@ -72,21 +72,21 @@ export const API = {
     return instance.put(`auth/me/`, {name, avatar}).then((response)=>response.data)
   },
   getCards(data?:AddDataType) {
-    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}`).then((response)=> response.data)
+    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}&sortPacks=${data?.sortPacks}name`).then((response)=> response.data)
   }
 }
 export type AddDataType = {
   packName?: string
   min?: string
   max?: string
-  sortPack?: string
+  sortPacks?: string
   page?: string
   pageCount?: string
 }
 
 export type CardsResponseType = {
   cardPacks: Array<CardsType>
-  cardsPackTotalCount: number
+  cardPacksTotalCount: number
   maxCardCount: number
   minCardCount: number
   page: number

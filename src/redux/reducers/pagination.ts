@@ -22,7 +22,7 @@ const initialState = {
     itemsCountPerPage: 5,
 
     //Сколько всего прийдет карт - сюда надо сетать из get запроса, AC и логику написал, пока хардкод 5000
-    totalItemsCount: 5000,
+    totalItemsCount: 0,
 }
 
 type SetActivePageActionType = {
@@ -35,7 +35,7 @@ type SetPaginationActionType = {
     itemsCountPerPage: number,
 }
 
-type SetTotalItemsActionType = {
+export type SetTotalItemsActionType = {
     type: ACTION_TYPES.SET_TOTAL_ITEMS,
     totalItems: number,
 }
@@ -69,7 +69,7 @@ export const setPaginationAC = (itemsCountPerPage: number): SetPaginationActionT
     }
 }
 
-export const setTotalItemsAC = (totalItems: number): SetTotalItemsActionType => {
+export const setTotalItemsAC = (totalItems: number = 5): SetTotalItemsActionType => {
     return {
         type: ACTION_TYPES.SET_TOTAL_ITEMS,
         totalItems,

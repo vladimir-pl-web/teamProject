@@ -19,7 +19,12 @@ export const Pagin = () => {
 
     useEffect(() => {
         if (isChanged) {
-            dispatch(getAllCards({page: activePage.toString(), pageCount: itemsCountPerPage.toString()}));
+            dispatch(
+              getAllCards({
+                page: activePage.toString(),
+                pageCount: itemsCountPerPage.toString(),
+              })
+            );
             setIsChanged(false);  
         }
     }, [isChanged, setIsChanged])

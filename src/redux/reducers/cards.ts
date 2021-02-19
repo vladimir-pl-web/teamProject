@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { AddDataType, API, CardsType } from "../../api/api";
+import { setTotalItemsAC } from "./pagination";
 
 type InitCardsType = typeof initState
 const initState = {
@@ -8,7 +9,10 @@ const initState = {
   error: ''
 }
 
-export type CardsActionType = ReturnType<typeof setLoading> | ReturnType<typeof setError> | ReturnType<typeof setCards>
+export type CardsActionType = ReturnType<typeof setLoading>
+  | ReturnType<typeof setError>
+  | ReturnType<typeof setCards>
+   | ReturnType<typeof setTotalItemsAC>
 
 export const setLoading = (loading:boolean) => {
   return{type: 'SET_LOADING', loading}as const
@@ -34,11 +38,12 @@ export const cardsReducer = (state: InitCardsType = initState, action: CardsActi
   }
 }
 
-export const getAllCards = (data?:AddDataType) => (dispatch:Dispatch)=>{
-  dispatch(setLoading(true))
+export const getAllCards = (data?: AddDataType) => (dispatch: Dispatch) => {
+ 
   API.getCards(data)
     .then((res) => {
       dispatch(setCards(res.cardPacks))
+      dispatch(setTotalItemsAC(+res.cardPacksTotalCount))
        dispatch(setLoading(false))
     })
     .catch((e) => {
