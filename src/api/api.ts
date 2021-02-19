@@ -72,7 +72,7 @@ export const API = {
     return instance.put(`auth/me/`, { name, avatar }).then((response) => response.data)
   },
   getCards(data?: AddDataType) {
-    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}&sortPacks=${data?.sortPacks}name&min=${data?.min}&max=${data?.max}`).then((response) => response.data)
+    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}&sortPacks=${data?.sortPacks}name&min=${data?.min}&max=${data?.max}?packName=${data?.packName}`).then((response) => response.data)
   },
   deletePack(id: string) {
     return instance.delete(`cards/pack/?id=${id}`).then((response) => response.data)

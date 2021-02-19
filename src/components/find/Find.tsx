@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {setSearchValueAC} from "../../redux/reducers/find";
 import {Button, TextField} from "@material-ui/core";
 import styles from "./Find.module.css"
+import { getAllCards } from "../../redux/reducers/cards";
 
 export const Find = () => {
 
@@ -15,7 +16,7 @@ export const Find = () => {
 
     useEffect(() => {
         if (isChange) {
-            //getCards() пошел запрос за карточками
+        dispatch(getAllCards({packName: searchValue}));
             setIsChange(false);
         }
     }, [isChange, setIsChange])

@@ -14,8 +14,10 @@ const Cards = () => {
   const dispatch = useDispatch()
   const cardPack = useSelector<RootStateType, Array<SingleCardType>>((state) => state.singlePack.card)
   const isLoading = useSelector<RootStateType, boolean>((state) => state.singlePack.loading)
-const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+  const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+  
   const history = useHistory();
+  
   useEffect(() => {
     !isAuthorised && history.push("/login");
   id &&  dispatch(getSinglePack(id.slice(1)));
