@@ -56,7 +56,7 @@ const Packs = () => {
   
   const dispatch = useDispatch()
   useEffect(() => {
-    // !isAuthorised && history.push("/login");
+    !isAuthorised && history.push("/login");
     dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
   }, [])
 
