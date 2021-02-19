@@ -1,4 +1,4 @@
-import { Button, Paper, Switch, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core'
+import { Button, Grid, Paper, Slider, Switch, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CardsType } from '../../api/api'
@@ -9,59 +9,65 @@ import Preloader from '../preloader/spinner'
 import classes from './cards.module.scss'
 import { useHistory } from 'react-router-dom'
 import { Pagin } from '../pagination/Pagin'
+import Icon from '@material-ui/core/Icon'
 
 const Cards = () => {
-  
-const CustomTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-    background: "rgba(191, 191, 191, .7)",
-  },
-}))(TableCell);
+
+  const CustomTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+      background: "rgba(191, 191, 191, .7)",
+    },
+  }))(TableCell);
   const CustomSwitch = withStyles((theme) => ({
     root: {
-      transform: 'rotate(90deg)'
+      transform: 'rotate(90deg)',
+      background: 'grey',
+      borderRadius: '40%'
     },
- 
+
   }))(Switch);
 
-// const styles = (theme: { spacing: { unit: number }; palette: { background: { default: any } } }) => ({
-//   root: {
-//     width: "100%",
-//     marginTop: theme.spacing.unit * 3,
-//     overflowX: "auto",
-//   },
-//   table: {
-//     minWidth: 700,
-//   },
-//   row: {
-//     "&:nth-of-type(odd)": {
-//       backgroundColor: theme.palette.background.default,
-//     },
-//   },
-//   });
-  
+  const styles = (theme: { spacing: { unit: number }; palette: { background: { default: any } } }) => ({
+    rightIcon: {
+      marginLeft: theme.spacing.unit,
+    },
+  });
+
   const isLoading = useSelector<RootStateType, boolean>((state) => state.cards.loading)
   const cards = useSelector<RootStateType, Array<CardsType>>((state) => state.cards.cards)
+  const min = useSelector<RootStateType, number>((state) => state.cards.min)
+  const max = useSelector<RootStateType, number>((state) => state.cards.max);
   const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
-   const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
+  const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
+
   const history = useHistory();
-const [sort, setSort]=useState<boolean>(false)
+  const [sort, setSort] = useState<boolean>(false)
+  const [values, setValues] = useState<Array<number>>([min, max])
+  console.log(values);
+
   const dispatch = useDispatch()
   useEffect(() => {
-// !isAuthorised && history.push("/login");
-  dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
+    // !isAuthorised && history.push("/login");
+    dispatch(getAllCards({ pageCount: itemsCountPerPage.toString() }));
   }, [])
-  
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSort(e.currentTarget.checked)
     let res = sort === true ? '0' : '1'
-    dispatch(getAllCards({sortPacks: res }));
+    dispatch(getAllCards({ sortPacks: res }));
   };
+  const onSliderChange = (e: ChangeEvent<{}>, newValue: number | number[]) => {
+    setValues(newValue as number[])
+  };
+  const onCountSort = () => {
+
+    dispatch(getAllCards({min: values[0].toString(), max: values[1].toString() }));
+  }
   const rows = cards.map((el) => {
     return (
       <TableRow key={el._id}>
@@ -98,6 +104,7 @@ const [sort, setSort]=useState<boolean>(false)
       </TableRow>
     );
   })
+
   return (
     <div className={classes.Cards}>
       <Typography gutterBottom variant="h3" component="h4">
@@ -107,6 +114,40 @@ const [sort, setSort]=useState<boolean>(false)
         <Preloader />
       ) : (
         <>
+          <Grid
+            container
+            xs={6}
+            direction="row"
+            justify="space-between"
+            style={{ width: "100%", margin: "20px", flexBasis: "0" }}
+          >
+            <Grid item xs={3} style={{ color: "yellow" }}>
+              Тут будет поиск
+            </Grid>
+            <Grid item xs={4}>
+              <Slider
+                color="primary"
+                value={values}
+                max={max}
+                min={min}
+                valueLabelDisplay="auto"
+                aria-labelledby="range-slider"
+                onChange={onSliderChange}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={onCountSort}
+              >
+                Sort by count
+                <Icon className={classes.rightIcon}>sort</Icon>
+              </Button>
+            </Grid>
+          </Grid>
+
           <Paper className={classes.root}>
             <Table className={classes.table}>
               <TableHead style={{ borderRadius: "3px" }}>
@@ -125,7 +166,6 @@ const [sort, setSort]=useState<boolean>(false)
               <TableBody>{rows}</TableBody>
             </Table>
           </Paper>
-
           <Pagin />
         </>
       )}

@@ -72,7 +72,7 @@ export const API = {
     return instance.put(`auth/me/`, {name, avatar}).then((response)=>response.data)
   },
   getCards(data?:AddDataType) {
-    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}&sortPacks=${data?.sortPacks}name`).then((response)=> response.data)
+    return instance.get<CardsResponseType>(`cards/pack/?&page=${data?.page}&pageCount=${data?.pageCount}&sortPacks=${data?.sortPacks}name&min=${data?.min}&max=${data?.max}`).then((response)=> response.data)
   }
 }
 export type AddDataType = {
@@ -87,8 +87,8 @@ export type AddDataType = {
 export type CardsResponseType = {
   cardPacks: Array<CardsType>
   cardPacksTotalCount: number
-  maxCardCount: number
-  minCardCount: number
+  maxCardsCount: number
+  minCardsCount: number
   page: number
   pageCount: number
   token: string
