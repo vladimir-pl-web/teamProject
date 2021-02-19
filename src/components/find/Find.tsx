@@ -1,13 +1,15 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useEffect, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {setSearchValueAC} from "../../redux/reducers/find";
+import {Button, TextField} from "@material-ui/core";
+import styles from "./Find.module.css"
 
 export const Find = () => {
 
     const dispatch = useDispatch();
 
     const [isChange, setIsChange] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState<string | null>('');
 
     const [searchValue, setSearchValue] = useState('')
 
@@ -23,6 +25,9 @@ export const Find = () => {
         setSearchValue(inputValue);
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null)
+        }
         if (e.key === "Enter") {
             appendValue();
         }
@@ -39,16 +44,23 @@ export const Find = () => {
     }
 
     return <React.Fragment>
-        <div>
-            <input
+        <div className={styles.searchField}>
+            <TextField
+                error={!!error}
+                helperText={error}
+                label="Search"
                 onKeyPress={onKeyPressHandler}
                 autoFocus
                 onChange={onChangesValue}
                 value={searchValue}
             />
-            <button onClick={appendValue}>Search</button>
+            <Button
+                onClick={appendValue}
+                variant="contained">
+                Search
+            </Button>
         </div>
-        {error && <div>{error}</div>}
+
 
     </React.Fragment>
 }
