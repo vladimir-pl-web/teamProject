@@ -7,7 +7,7 @@ import { RootStateType } from '../../redux/store'
 import DeleteIcon from "@material-ui/icons/Delete";
 import Preloader from '../preloader/spinner'
 import classes from './packs.module.scss'
-import { useHistory} from 'react-router-dom'
+import { Link, NavLink, useHistory } from 'react-router-dom'
 import { Pagin } from '../pagination/Pagin'
 import Icon from '@material-ui/core/Icon'
 import { Find } from '../find/Find'
@@ -44,16 +44,16 @@ const Packs = () => {
   const min = useSelector<RootStateType, number>((state) => state.cards.min)
   const max = useSelector<RootStateType, number>((state) => state.cards.max);
   const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
-  const myId= useSelector<RootStateType, string>((state) => state.profile.user._id)
+  const myId = useSelector<RootStateType, string>((state) => state.profile.user._id)
   const itemsCountPerPage = useSelector<RootStateType, number>(state => state.pagination.itemsCountPerPage);
 
   const history = useHistory();
 
-  
+
   const [sort, setSort] = useState<boolean>(false)
   const [values, setValues] = useState<Array<number>>([min, max])
 
-  
+
   const dispatch = useDispatch()
   useEffect(() => {
     !isAuthorised && history.push("/login");
@@ -70,21 +70,21 @@ const Packs = () => {
   };
   const onCountSort = () => {
 
-    dispatch(getAllCards({min: values[0].toString(), max: values[1].toString() }));
+    dispatch(getAllCards({ min: values[0].toString(), max: values[1].toString() }));
   }
   const deleteHandler = (id: string) => {
     dispatch(deleteCards(id));
   }
   const onPackAdd = () => {
     dispatch(addCards());
-    
+
   }
-  const onUpdated = (id:string) => {
+  const onUpdated = (id: string) => {
     dispatch(updateCards(id));
   }
-  const onCardsGet = (id: string) => {
-    history.push(`/cards/:${id}`)
-  }
+  // const onCardsGet = (id: string) => {
+  //   history.push(`/cards`)
+  // }
   const rows = cards.map((el) => {
     return (
       <TableRow key={el._id}>
@@ -112,14 +112,14 @@ const Packs = () => {
             variant="contained"
             color="primary"
             className={classes.button}
-            onClick={()=>onUpdated(el._id)}
+            onClick={() => onUpdated(el._id)}
           >
             update
           </Button>
         </CustomTableCell>
         <CustomTableCell align="right">
-          <Button variant="contained" component="span" onClick={()=>onCardsGet(el._id)}>
-            Get Cards
+          <Button variant="contained" component="span">
+            <Link to={`/cards/${el._id}`}>Get Cards</Link>
           </Button>
         </CustomTableCell>
       </TableRow>
@@ -134,74 +134,74 @@ const Packs = () => {
       {isLoading ? (
         <Preloader />
       ) : (
-        <>
-          <Find />
-          <Grid
-            container
-            xs={6}
-            direction="row"
-            justify="space-between"
-            style={{ width: "100%", margin: "20px", flexBasis: "0" }}
-          >
-            <Grid item xs={4} style={{ color: "yellow" }}>
-              put your count range
+          <>
+            <Find />
+            <Grid
+              container
+              xs={6}
+              direction="row"
+              justify="space-between"
+              style={{ width: "100%", margin: "20px", flexBasis: "0" }}
+            >
+              <Grid item xs={4} style={{ color: "yellow" }}>
+                put your count range
               <Slider
-                color="primary"
-                value={values}
-                max={max}
-                min={min}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                onChange={onSliderChange}
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={onCountSort}
-              >
-                <Icon className={classes.rightIcon}>sort</Icon>
+                  color="primary"
+                  value={values}
+                  max={max}
+                  min={min}
+                  valueLabelDisplay="auto"
+                  aria-labelledby="range-slider"
+                  onChange={onSliderChange}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={onCountSort}
+                >
+                  <Icon className={classes.rightIcon}>sort</Icon>
                 by count
               </Button>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                variant="contained"
-                color="default"
-                className={classes.button}
-                onClick={onPackAdd}
-              >
-                <Icon className={classes.rightIcon} color="primary">
-                  add
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="contained"
+                  color="default"
+                  className={classes.button}
+                  onClick={onPackAdd}
+                >
+                  <Icon className={classes.rightIcon} color="primary">
+                    add
                 </Icon>
                 pack
               </Button>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead style={{ borderRadius: "3px" }}>
-                <TableRow>
-                  <CustomTableCell>
-                    <CustomSwitch checked={sort} onChange={handleChange} /> Name
+            <Paper className={classes.root}>
+              <Table className={classes.table}>
+                <TableHead style={{ borderRadius: "3px" }}>
+                  <TableRow>
+                    <CustomTableCell>
+                      <CustomSwitch checked={sort} onChange={handleChange} /> Name
                   </CustomTableCell>
-                  <CustomTableCell align="right">Card Count</CustomTableCell>
-                  <CustomTableCell align="right">Updated</CustomTableCell>
-                  <CustomTableCell align="right">Url</CustomTableCell>
-                  <CustomTableCell align="right">Delete</CustomTableCell>
-                  <CustomTableCell align="right">Update</CustomTableCell>
-                  <CustomTableCell align="right">Get Cards</CustomTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>{rows}</TableBody>
-            </Table>
-          </Paper>
-          <Pagin />
-        </>
-      )}
+                    <CustomTableCell align="right">Card Count</CustomTableCell>
+                    <CustomTableCell align="right">Updated</CustomTableCell>
+                    <CustomTableCell align="right">Url</CustomTableCell>
+                    <CustomTableCell align="right">Delete</CustomTableCell>
+                    <CustomTableCell align="right">Update</CustomTableCell>
+                    <CustomTableCell align="right">Get Cards</CustomTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>{rows}</TableBody>
+              </Table>
+            </Paper>
+            <Pagin />
+          </>
+        )}
     </div>
   );
 }

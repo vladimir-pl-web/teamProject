@@ -90,7 +90,8 @@ export const deleteCards = (id: string) => (dispatch: ThunkDispatch<RootStateTyp
     
   })
 }
-export const addCards = () => (dispatch: ThunkDispatch<RootStateType, any,CardsActionType>) => { 
+export const addCards = () => (dispatch: ThunkDispatch<RootStateType, any, CardsActionType>) => {
+  
    dispatch(setLoading(true))
   API.addPack()
     .then((res) => {

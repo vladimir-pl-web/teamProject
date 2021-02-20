@@ -1,9 +1,9 @@
-import { Button, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core';
+import { Button, Icon, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, withStyles } from '@material-ui/core';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams} from 'react-router-dom';
+import { useHistory, useParams, withRouter} from 'react-router-dom';
 import { SingleCardType } from '../../api/api';
-import { getSinglePack } from '../../redux/reducers/singleCard';
+import { addSinglePack, getSinglePack } from '../../redux/reducers/singleCard';
 import { RootStateType } from '../../redux/store';
 import Preloader from '../preloader/spinner';
 import classes from './cards.module.scss'
@@ -11,17 +11,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const Cards = () => {
   const { id } = useParams<{ id: string }>();
+ const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+  useEffect(() => {
+    !isAuthorised && history.push("/login");
+    id && dispatch(getSinglePack(id));
+  }, []);
   const dispatch = useDispatch()
   const cardPack = useSelector<RootStateType, Array<SingleCardType>>((state) => state.singlePack.card)
   const isLoading = useSelector<RootStateType, boolean>((state) => state.singlePack.loading)
-  const isAuthorised = useSelector<RootStateType, boolean>((state) => state.profile.isAuthSuccess)
+ 
+  //  const cardId= useSelector<RootStateType, string>((state) => state.singlePack.card[0].cardsPack_id)
   
   const history = useHistory();
-  
-  useEffect(() => {
-    !isAuthorised && history.push("/login");
-  id &&  dispatch(getSinglePack(id.slice(1)));
-  }, [])
     const CustomTableCell = withStyles((theme) => ({
       head: {
         backgroundColor: "green",
@@ -34,6 +35,9 @@ const Cards = () => {
       },
     }))(TableCell);
   
+  const onCardAdd = (id: string) => {
+    dispatch(addSinglePack(id));
+  }
   const rows = cardPack.map((el) => {
     return (
       <TableRow key={el._id}>
@@ -66,6 +70,17 @@ const Cards = () => {
             Delete
             <DeleteIcon className={classes.rightIcon} />
           </Button>
+          <Button
+            variant="contained"
+            color="default"
+            className={classes.button}
+            onClick={() => onCardAdd(el.user_id)}
+          >
+            <Icon className={classes.rightIcon} color="primary">
+              add
+            </Icon>
+            pack
+          </Button>
         </CustomTableCell>
       </TableRow>
     );
@@ -73,7 +88,8 @@ const Cards = () => {
   return (
     <div className={classes.Cards}>
       <Typography gutterBottom variant="h3" component="h4">
-        Card Packs
+        Card Packs{" "}
+
       </Typography>
       {isLoading ? (
         <Preloader />
@@ -92,9 +108,7 @@ const Cards = () => {
                   <CustomTableCell align="right">Delete</CustomTableCell>
                 </TableRow>
               </TableHead>
-                <TableBody>
-                  {rows}
-              </TableBody>
+              <TableBody>{rows}</TableBody>
             </Table>
           </Paper>
         </>
@@ -102,4 +116,4 @@ const Cards = () => {
     </div>
   );
 }
-export default Cards
+export default withRouter(Cards)

@@ -27,8 +27,8 @@ const messageForRecoveryPassword =
 
 
 let instance = axios.create({
-  baseURL: 'https://neko-back.herokuapp.com/2.0/',
-  // baseURL: `http://localhost:7542/2.0/`,
+  // baseURL: 'https://neko-back.herokuapp.com/2.0/',
+  baseURL: `http://localhost:7542/2.0/`,
   withCredentials: true,
 })
 
@@ -85,6 +85,9 @@ export const API = {
   },
     getSinglecardPack(id: string) {
     return instance.get<SingleCardResponseType>(`cards/card/?&cardsPack_id=${id}`).then((response) => response.data)
+  },
+    addSinglecardPack(id: string) {
+    return instance.post(`cards/card/`,{card:{cardsPack_id:id, question:'How are you?'}}).then((response) => response.data)
   },
 }
 export type AddDataType = {
