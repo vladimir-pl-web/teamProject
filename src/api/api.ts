@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LoginDataType } from '../redux/reducers/profile';
+import {SendGradeResponseType} from './cardsTypes';
 //  `https://neko-back.herokuapp.com/2.0`
 
 type LoginResponseType = {
@@ -89,6 +90,9 @@ export const API = {
     addSinglecardPack(id: string) {
     return instance.post(`cards/card/`,{card:{cardsPack_id:id, question:'How are you?'}}).then((response) => response.data)
   },
+  sendGrade(grade: number, card_id: string) {
+    return instance.put<SendGradeResponseType>('/cards/grade', {grade, card_id}).then(response => response.data)
+  }
 }
 export type AddDataType = {
   packName?: string

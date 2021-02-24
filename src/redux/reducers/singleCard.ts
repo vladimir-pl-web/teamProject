@@ -71,3 +71,14 @@ export const addSinglePack = (id: string) => (dispatch: Dispatch) => {
     
   })
 }
+
+export const sendGrade = (id: string, grade: number) => (dispatch: Dispatch) => {
+  dispatch(setSingleCardLoading(true))
+  API.sendGrade(grade, id)
+      .then((res) => {
+        dispatch(setSingleCardLoading(false))
+      })
+      .catch((e) => {
+        dispatch(setSingleCardError(e.response.data.error));
+      })
+}

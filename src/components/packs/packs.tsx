@@ -122,6 +122,11 @@ const Packs = () => {
             <Link to={`/cards/${el._id}`}>Get Cards</Link>
           </Button>
         </CustomTableCell>
+        <CustomTableCell align="right">
+          <Button variant="contained" component="span">
+            <Link to={`/learn/${el._id}`}>Learn</Link>
+          </Button>
+        </CustomTableCell>
       </TableRow>
     );
   })
@@ -194,6 +199,7 @@ const Packs = () => {
                     <CustomTableCell align="right">Delete</CustomTableCell>
                     <CustomTableCell align="right">Update</CustomTableCell>
                     <CustomTableCell align="right">Get Cards</CustomTableCell>
+                    <CustomTableCell align="right">Learn</CustomTableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>{rows}</TableBody>

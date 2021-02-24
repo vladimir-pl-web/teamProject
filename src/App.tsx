@@ -11,6 +11,7 @@ import Error from './components/error/error'
 import Nav from './components/navigation/nav';
 import Packs from './components/packs/packs';
 import Cards from './components/cards/cards';
+import Learn from './components/learn/learn';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route exact path={"/register"} render={() => <Register />} />
         <Route exact path={"/packs"} render={() => <Packs />} />
         <Route exact path={"/cards/:id?/"} render={() => <Cards />} />
+        <Route exact path={"/learn/:id?/"} render={() => <Learn />} />
         <Route path={"/NewPass/:token"} render={() => <NewPass />} />
         <Route exact path={"/passRecover"} render={() => <PassRecover />} />
         <Route path={"*"} render={() => <Error />} />
